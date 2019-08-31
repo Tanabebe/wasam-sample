@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./wasm_exec.js"></script>
+    <script>
+        (async () => {
+            const go = new Go();
+            const { instance } = await WebAssembly.instantiateStreaming(
+                fetch('main.wasm'),
+                go.importObject
+            );
+            await go.run(instance);
+        })();
+        async function run() {
+            console.clear();
+            await go.run(inst);
+            inst = await WebAssembly.instantiate()
+        }
+
+    </script>
+
+    <div id="message">Hello, World</div>
+
+    <button id="sample">Sample!!</button>
+    <button id="rand">Rand!!</button>
+    <div><input type="text" id="in"></div>
+    <div><input type="text" id="out"></div>
+</head>
+<body>
+
+</body>
+</html>
