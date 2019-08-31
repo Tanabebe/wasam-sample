@@ -2,9 +2,7 @@ package main
 
 import (
 	"fmt"
-	"math/rand"
 	"syscall/js"
-	"time"
 )
 
 // documentオブジェクト取得用
@@ -15,8 +13,6 @@ var window = js.Global()
 
 // bodyのDOM取得
 var body = document.Get("body")
-
-var name = []string{"たなべ", "やまだ", "やまざき", "すずき", "よこやま", "かごしま"}
 
 // 対象のDOMのIDを取得する関数
 func getElementByID(targetID string) js.Value {
@@ -67,15 +63,14 @@ func main() {
 	}))
 
 	// 既にhtmlに書かれているボタンのidを取得して、goからclick時のEventListenerを設定する
-	document.Call("getElementById", "sample").Call("addEventListener", "click", js.FuncOf(func(js.Value, []js.Value) interface{} {
+	document.Call("getElementById", "init-text").Call("addEventListener", "click", js.FuncOf(func(js.Value, []js.Value) interface{} {
 		message := getElementByID("message")
 		message.Set("innerHTML", "Hello, World")
 		return nil
 	}))
 
-
 	// textエリアの入力値を取得
-	getElementByID("in").Call("addEventListener", "keyup", js.FuncOf(func(this js.Value, args []js.Value) interface{} {
+	getElementByID("in").Call("addEventListener", "keyup", js.FuncOf(func(js.Value, []js.Value) interface{} {
 		getElementByID("out").Set("value", getElementByID("in").Get("value"))
 		return nil
 	}))
