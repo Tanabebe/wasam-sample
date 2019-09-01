@@ -14,16 +14,6 @@ var window = js.Global()
 // bodyのDOM取得
 var body = document.Get("body")
 
-// 対象のDOMのIDを取得する関数
-func getElementByID(targetID string) js.Value {
-	return document.Call("getElementById", targetID)
-}
-
-// 対象のDOMを作成する関数
-func createElement(elementName string) js.Value {
-	return document.Call("createElement", elementName)
-}
-
 func main() {
 	// goからbuttonのDOMを作成する
 	cLogBtn := createElement("button")
@@ -63,7 +53,7 @@ func main() {
 	}))
 
 	// 既にhtmlに書かれているボタンのidを取得して、goからclick時のEventListenerを設定する
-	document.Call("getElementById", "init-text").Call("addEventListener", "click", js.FuncOf(func(js.Value, []js.Value) interface{} {
+	getElementByID("init-text").Call("addEventListener", "click", js.FuncOf(func(js.Value, []js.Value) interface{} {
 		message := getElementByID("message")
 		message.Set("innerHTML", "Hello, World")
 		return nil
@@ -77,4 +67,14 @@ func main() {
 
 	// プログラムが終了しないように待機
 	select {}
+}
+
+// 使用頻度が高そうなので、対象のDOMのIDを取得する関数を用意
+func getElementByID(targetID string) js.Value {
+	return document.Call("getElementById", targetID)
+}
+
+// 使用頻度が高そうなので、対象DOMを作成する関数を用意
+func createElement(elementName string) js.Value {
+	return document.Call("createElement", elementName)
 }
